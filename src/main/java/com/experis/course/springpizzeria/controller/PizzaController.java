@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -63,32 +62,22 @@ public class PizzaController {
 
     //    metodo per mostrare il form
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("Pizza", new Pizza());
+    public String createGet(Model model) {
+        // Istanzio un nuovo oggetto Pizza e lo passo con il model
+        model.addAttribute("pizza", new Pizza());
         return "create";
     }
 
+    // Rotta "/pizzas/create" (POST)
     @PostMapping("/create")
-    public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza,
-                           BindingResult bindingResult) {
-
-
-        // validare che i dati siano corretti
+    public String createPost(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+        // Controllo se ci sono errori
         if (bindingResult.hasErrors()) {
-            // ci sono errori, devo ricaricare il form
+            // Se ci sono ricarico la pagina mantendendo i dati (grazie al model)
             return "create";
         }
 
-        Pizza savedPizza = null;
-        try {
-            savedPizza = pizzaRepository.save(formPizza);
-        } catch (RuntimeException e) {
-            // aggiungo un errore di validazione per isbn
-            bindingResult.addError(new FieldError("Pizza", "description", formPizza.getDescription(), false, null, null,
-                    "ISBN must be unique"));
-            // ti rimando alla pagina col form
-            return "create";
-        }
+        Pizza savedPizza = pizzaRepository.save(formPizza);
         return "redirect:/pizzas/show/" + savedPizza.getId();
     }
 }

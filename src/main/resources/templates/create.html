@@ -1,59 +1,35 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Create Pizza</title>
+<head th:insert="fragments/resources :: headResources('Pizza Create')"></head>
+<body>
+<div class="container create">
+    <h1>Crea Pizza</h1>
+    <hr>
+    <form
+            id="pizza-create"
+            method="POST"
+            th:action="@{/pizzas/create}"
+            th:object="${pizza}"
+            class="row"
+    >
 
-    <!doctype html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Create Pizza</title>
+       
+        <div class="col-9" th:insert="fragments/components :: formField('text', 'Nome', 'name')"></div>
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <style>
-            .container {
-                max-width: 500px;
-                margin-top: 50px;
-            }
-            .form-group label {
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-    <div class="container">
-        <h1>Create Pizza</h1>
-        <hr>
 
-        <form id="create" method="POST" th:action="@{/pizzas/create}" enctype="multipart/form-data">
-            <!-- Name -->
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <!--            price-->
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" class="form-control" id="price" name="price" required>
-            </div>
-            <!-- Description -->
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
-            </div>
-            <!-- Photo -->
-            <div class="form-group">
-                <label for="description">Photo</label>
-                <textarea class="form-control" id="photo" name="photo" rows="5"
-                ></textarea>
-            </div>
+        <div class="col-3" th:insert="fragments/components :: formField('number', 'Prezzo', 'price')"></div>
 
-            <!-- Actions -->
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <a href="/pizzas" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
-    </html>
+
+        <div th:insert="fragments/components :: formField('text', 'URL Foto', 'photo')"></div>
+
+
+        <div th:insert="fragments/components :: formField('textarea', 'Ingredienti', 'description')"></div>
+
+        <div class="mt-4 mb-5">
+            <button class="btn btn-primary" type="submit">Salva</button>
+            <a th:href="@{/pizzas}" class="btn btn-primary">Torna indietro</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
