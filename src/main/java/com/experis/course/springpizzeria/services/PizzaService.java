@@ -1,12 +1,10 @@
 package com.experis.course.springpizzeria.services;
 
+import com.experis.course.springpizzeria.exceptions.PizzaNotFoundException;
 import com.experis.course.springpizzeria.model.Pizza;
 import com.experis.course.springpizzeria.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +29,7 @@ public class PizzaService {
         }
     }
 
-    public Pizza getPizzaById(int id) throws ChangeSetPersister.NotFoundException {
+    public Pizza getPizzaById(int id) throws PizzaNotFoundException {
         Optional<Pizza> result = pizzaRepository.findById(id);
         // verifico se il risultato è presente
         if (result.isPresent()) {
@@ -39,8 +37,7 @@ public class PizzaService {
             return result.get();
 
         } else {
-            // se non ho trovato il libro sollevo un'eccezione
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
+            throw new PizzaNotFoundException("No Pizza found");
         }
     }
 
@@ -48,7 +45,7 @@ public class PizzaService {
         return pizzaRepository.save(pizza);
     }
 
-    public Pizza editPizza(Pizza pizza) throws ChangeSetPersister.NotFoundException {
+    public Pizza editPizza(Pizza pizza) throws PizzaNotFoundException {
         Pizza pizzaToEdit = getPizzaById(pizza.getId());
         // sostituisco i valori dei campi previsti
         pizzaToEdit.setName(pizza.getName());

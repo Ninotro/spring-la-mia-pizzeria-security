@@ -47,7 +47,7 @@
                 <a class="btn btn-primary" th:href="@{/pizzas/edit/{id}(id=*{id})}" title="edit">Edit</a>
             </td>
             <td>
-                <form method="POST" th:action="@{/books/delete/{id}(id=*{id})}"
+                <form method="POST" th:action="@{/pizzas/delete/{id}(id=*{id})}"
                       onsubmit="return confirm('Are you sure?')">
                     <button type="submit" class="btn btn-primary">Delete</i>
                     </button>
