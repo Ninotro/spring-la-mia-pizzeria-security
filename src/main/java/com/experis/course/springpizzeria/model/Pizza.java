@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pizza {
@@ -33,6 +35,9 @@ public class Pizza {
     private String photo;
     @DecimalMin(value = "0.01", message = "Il prezzo deve essere maggiore di zero")
     BigDecimal price;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offers = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -64,5 +69,13 @@ public class Pizza {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 }

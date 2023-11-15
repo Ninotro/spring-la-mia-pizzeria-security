@@ -32,7 +32,7 @@ public class PizzaController {
 
         // passo al template la lista di libri
         model.addAttribute("pizzaList", pizzaService.getPizzaList(search));
-        return "pizzalist";
+        return "pizzas/pizzalist";
     }
 
     @GetMapping("/show/{id}")
@@ -41,7 +41,7 @@ public class PizzaController {
         try {
             Pizza pizza = pizzaService.getPizzaById(id);
             model.addAttribute("pizza", pizza);
-            return "show";
+            return "pizzas/show";
         } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -54,7 +54,7 @@ public class PizzaController {
     public String createGet(Model model) {
         // Istanzio un nuovo oggetto Pizza e lo passo con il model
         model.addAttribute("pizza", new Pizza());
-        return "form";
+        return "pizzas/form";
     }
 
 
@@ -63,7 +63,7 @@ public class PizzaController {
 
         if (bindingResult.hasErrors()) {
 
-            return "form";
+            return "pizzas/form";
         }
 
 
@@ -81,7 +81,7 @@ public class PizzaController {
     public String edit(@PathVariable int id, Model model) {
         try {
             model.addAttribute("pizza", pizzaService.getPizzaById(id));
-            return "form";
+            return "pizzas/form";
         } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -93,7 +93,7 @@ public class PizzaController {
     public String doEdit(@PathVariable int id, @Valid @ModelAttribute("pizza") Pizza formPizza,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "pizzaList";
+            return "pizzas/pizzaList";
         Pizza savedPizza = null;
         try {
             savedPizza = pizzaService.editPizza(formPizza);

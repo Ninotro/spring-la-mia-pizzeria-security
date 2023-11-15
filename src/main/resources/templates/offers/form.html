@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Create Special Offer')"></head>
+<body>
+<div class="container create">
+    <h1>Crea Offerta Speciale</h1>
+    <hr>
+    <form id="offer-create" method="POST" th:action="@{/offers/create}" th:object="${offer}" class="row">
+        <div class="col-4">
+            <label>Data di inizio</label>
+            <input type="date" th:field="*{dataInizio}" class="form-control">
+        </div>
+        <div class="col-4">
+            <label>Data di fine</label>
+            <input type="date" th:field="*{dataFine}" class="form-control">
+        </div>
+        <div class="col-4">
+            <label>Titolo</label>
+            <input type="text" th:field="*{titolo}" class="form-control">
+        </div>
+        <div class="mt-4 mb-5">
+            <button class="btn btn-primary" type="submit">Salva Offerta</button>
+            <a th:href="@{/pizzas}" class="btn btn-primary">Torna indietro</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
