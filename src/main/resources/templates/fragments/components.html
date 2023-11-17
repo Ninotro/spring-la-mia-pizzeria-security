@@ -6,8 +6,17 @@
            class="form-label"
            th:text="${label}">
     </label>
-    <th:block th:if="${type == 'text' || type == 'number'}">
+    <th:block th:if="${type == 'text' || type == 'date'}">
         <input th:type="${type}"
+               class="form-control"
+               th:id="${fieldName}"
+               th:field="*{__${fieldName}__}"
+               th:errorClass="is-invalid"
+        >
+    </th:block>
+    <th:block th:if="${type == 'number'}">
+        <input th:type="${type}"
+               step="any"
                class="form-control"
                th:id="${fieldName}"
                th:field="*{__${fieldName}__}"
@@ -24,7 +33,13 @@
     </th:block>
     <div th:if="${#fields.hasErrors(fieldName)}" class="invalid-feedback">
         <ul class="p-2"
-            
+            style="
+            list-style-type: none;
+            background-color: #e02b29a6;
+            color: white;
+            font-weight: bold;
+            width: fit-content;
+            border-radius: 10px;"
         >
             <li th:each="error : ${#fields.errors(fieldName)}" th:text="${error}"></li>
         </ul>

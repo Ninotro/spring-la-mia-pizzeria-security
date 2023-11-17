@@ -3,6 +3,7 @@ package com.experis.course.springpizzeria.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
@@ -10,11 +11,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "pizzas")
 public class Pizza {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotBlank
+    @Size(max = 255, message = "Il nome non può essere più lungo di 255 caratteri")
+    private String name;
+
+    @NotBlank
+    @Size(max = 255, message = "La foto non può essere più lunga di 255 caratteri")
+    private String description;
+
+    @NotBlank
+    @Size(max = 10000, message = "Il link non può essere più lungo di 10000 caratteri")
+    private String photo;
+
+    @NotNull(message = "Il prezzo non può essere vuoto")
+    @DecimalMin(value = "0.01", message = "Il prezzo non può essere uguale/inferiore zero")
+    private BigDecimal price;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offers = new ArrayList<>();
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
 
     public Integer getId() {
         return id;
@@ -23,21 +51,6 @@ public class Pizza {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    @NotBlank(message = "Prego inserisci un nome, non può essere vuoto")
-    @Size(max = 255, message = "Nome troppo lungo, inserisci un max di 255 caratteri")
-    private String name;
-    @NotBlank(message = "Prego inserisci una descrizione, non può essere vuoto")
-    @Size(max = 255, message = "Descrizione troppo lunga, inserisci un max di 255 caratteri")
-
-    private String description;
-    @Column(length = 1000)
-    private String photo;
-    @DecimalMin(value = "0.01", message = "Il prezzo deve essere maggiore di zero")
-    BigDecimal price;
-
-    @OneToMany(mappedBy = "pizza")
-    private List<Offer> offers = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -69,13 +82,5 @@ public class Pizza {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
     }
 }

@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${pizza.id != null}">
-<head th:insert="fragments/resources :: headResources(${isEdit ? 'Edit Pizza' : 'Create Pizza'})"></head>
+<head th:insert="fragments/resources :: headResources(${isEdit ? 'Pizza Edit' : 'Pizza Create'})"></head>
 <body>
 <div class="container create">
-    <h1>Crea Pizza</h1>
+    <h1 th:text="${isEdit ? 'Modifica Pizza' : 'Crea Pizza'}"></h1>
     <hr>
     <form
-            th:with="actionUrl=${isEdit ? '/pizzas/edit/'+pizza.id : '/pizzas/create'}"
+            th:with="actionUrl=${isEdit ? '/pizzas/edit/' + pizza.id : '/pizzas/create'}"
             id="pizza-create"
             method="POST"
             th:action="@{${actionUrl}}"
@@ -14,16 +14,20 @@
             class="row"
     >
 
-
+        <!-- <label for="name" class="form-label">Nome</label> -->
+        <!-- <input type=text class="form-control" id="name" th:field="*{name}" -->
         <div class="col-9" th:insert="fragments/components :: formField('text', 'Nome', 'name')"></div>
 
-
+        <!-- <label for="price" class="form-label">Prezzo</label> -->
+        <!-- <input type=number class="form-control" id="price" th:field="*{price}"> -->
         <div class="col-3" th:insert="fragments/components :: formField('number', 'Prezzo', 'price')"></div>
 
-
+        <!-- <label for="photo" class="form-label">URL Foto</label> -->
+        <!-- <input type=text class="form-control" id="photo" th:field="*{photo}"> -->
         <div th:insert="fragments/components :: formField('text', 'URL Foto', 'photo')"></div>
 
-
+        <!-- <label for="description" class="form-label">Ingredienti</label> -->
+        <!-- <textarea class="form-control" id="description" rows="4" th:field="*{description}"></textarea> -->
         <div th:insert="fragments/components :: formField('textarea', 'Ingredienti', 'description')"></div>
 
         <div class="mt-4 mb-5">

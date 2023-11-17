@@ -8,35 +8,31 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "offers")
 public class Offer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-
-    private String title;
-
+    private Integer id;
     @NotNull
     private LocalDate startDate;
+    @NotNull
     private LocalDate endDate;
 
-    @NotNull
     @ManyToOne
     private Pizza pizza;
 
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(Pizza pizza) {
+        this.pizza = pizza;
+    }
+
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        this.id = id;
     }
 
     public LocalDate getStartDate() {
@@ -55,11 +51,15 @@ public class Offer {
         this.endDate = endDate;
     }
 
-    public Pizza getPizza() {
-        return pizza;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPizza(Pizza pizza) {
-        this.pizza = pizza;
+    public void setTitle(String title) {
+        this.title = title;
     }
+
+    @NotNull
+    private String title;
+
 }
