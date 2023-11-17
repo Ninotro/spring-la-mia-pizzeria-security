@@ -49,6 +49,8 @@ public class PizzaService {
         pizzaToEdit.setDescription(pizza.getDescription());
         pizzaToEdit.setPhoto(pizza.getPhoto());
         pizzaToEdit.setPrice(pizza.getPrice());
+        pizzaToEdit.setIngredients(pizza.getIngredients());
+
         // Salvo la pizza
         // Metodo .save salva ciò che riceve. Se i campi nel form mancano, li lascia vuoti (non si comporta come update)
         return pizzaRepository.save(pizzaToEdit);

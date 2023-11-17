@@ -2,4 +2,8 @@ INSERT INTO pizzas ( description, name, photo, price) VALUES( 'Pomodoro e mozzar
 INSERT INTO pizzas ( description, name, photo, price)  VALUES ('Con prosciutto, funghi, olive e carciofi', 'Capricciosa',"https://primochef.it/wp-content/uploads/2018/05/SH_pizza_capricciosa.jpg", 10.99);
 INSERT INTO pizzas  ( description, name, photo, price) VALUES ('Con gorgonzola, mozzarella, pecorino e parmigiano', 'Quattro Formaggi',"https://media-assets.lacucinaitaliana.it/photos/61faed2abe60547b84221fab/4:3/w_1420,h_1065,c_limit/ricette-4-formaggi.jpg", 11.99);
 INSERT INTO pizzas ( description, name, photo, price) VALUES ('Ricca di verdure come peperoni, pomodori e spinaci', 'Vegetariana',"https://www.fruttaweb.com/consigli/wp-content/uploads/2018/06/pizza-vegana.jpg", 9.99);
+INSERT INTO ingredients(name) VALUES('melanzana');
+INSERT INTO ingredients(name) VALUES('cipolla');
+INSERT INTO ingredients(name) VALUES('gamberetto');
+INSERT INTO ingredients(name) VALUES('ananas');
 

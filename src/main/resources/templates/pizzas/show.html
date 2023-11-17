@@ -7,10 +7,18 @@
     <hr>
     <dl class="d-flex align-items-center justify-content-between">
         <div style="width: 70%; font-size: 25px;">
-            <dt>Ingredienti</dt>
+            <dt>Descrizione</dt>
             <dd th:text="*{description}"></dd>
             <dt>Prezzo</dt>
             <dd th:text="|€*{price}|"></dd>
+            <dt>Ingredienti</dt>
+            <dd>
+                <ul th:if="${pizza.ingredients.size() > 0}">
+                    <li th:each="ingredient : ${pizza.ingredients}" th:text="${ingredient.name}"></li>
+                </ul>
+                <div th:unless="${pizza.ingredients.size() > 0}" class="alert alert-info">La lista è vuota</div>
+            </dd>
+
         </div>
         <div style="width: 30%">
             <dd><img style="width: 300px; height: 300px; object-fit: cover;" th:src="*{photo}" alt="pizza"></dd>

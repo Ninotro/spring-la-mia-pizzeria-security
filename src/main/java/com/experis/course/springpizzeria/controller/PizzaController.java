@@ -2,6 +2,7 @@ package com.experis.course.springpizzeria.controller;
 
 import com.experis.course.springpizzeria.exceptions.PizzaNotFoundException;
 import com.experis.course.springpizzeria.model.Pizza;
+import com.experis.course.springpizzeria.service.IngredientService;
 import com.experis.course.springpizzeria.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class PizzaController {
     @Autowired
     private PizzaService pizzaService;
+    @Autowired
+    private IngredientService ingredientService;
 
 
     @GetMapping
@@ -36,6 +39,8 @@ public class PizzaController {
         try {
             Pizza pizza = pizzaService.getPizzaById(id);
             model.addAttribute("pizza", pizza);
+            model.addAttribute("ingredientList", pizza.getIngredients());
+
             return "pizzas/show";
         } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -47,14 +52,16 @@ public class PizzaController {
     public String createGet(Model model) {
         // Istanzio un nuovo oggetto Pizza e lo passo con il model
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredientList", ingredientService.getAll());
         return "pizzas/create_update";
     }
 
     // Rotta "/pizzas/create" (POST)
     @PostMapping("/create")
-    public String createPost(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+    public String createPost(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         // Controllo se ci sono errori
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredientList", ingredientService.getAll());
             // Se ci sono ricarico la pagina mantendendo i dati (grazie al model)
             return "pizzas/create_update";
         }
@@ -70,6 +77,7 @@ public class PizzaController {
         try {
             // Passo la pizza con il model
             model.addAttribute("pizza", pizzaService.getPizzaById(id));
+            model.addAttribute("ingredientList", ingredientService.getAll());
             return "/pizzas/create_update";
         } catch (PizzaNotFoundException e) {
             // Altrimenti lancio eccezione
@@ -79,20 +87,16 @@ public class PizzaController {
 
     // Rotta "/pizzas/edit/id <---(dinamico)" (POST)
     @PostMapping("/edit/{id}")
-    // Parametri in ingresso:
-    // @PathVariable Integer id -> per gestire quale elemento modifcare
-    // @Valid -> per validazioni
-    // @ModelAttribute("book") -> per ritornare stessa pizza in caso di errori
-    // Pizza formPizza -> cioò che ricevo dal form
-    // BindingResult bindingResult -> mappa errori
+
     public String editPost(
             @PathVariable Integer id,
             @Valid
             @ModelAttribute("pizza")
-            Pizza formPizza,
-            BindingResult bindingResult) {
+            Pizza formPizza, BindingResult bindingResult, Model model) {
+
+
         if (bindingResult.hasErrors()) {
-            // Se ci sono errori ricarico la pagina
+            model.addAttribute("ingredientList", ingredientService.getAll());//
             return "/pizzas/create_update";
         }
         try {
