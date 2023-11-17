@@ -44,7 +44,7 @@ public class IngredientController {
         try {
             // salvo la nuova categoria su database
             ingredientService.save(formIngredient);
-            return "redirect:/cate";
+            return "redirect:/ingredients";
         } catch (IngredientNameUniqueException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "A ingredient " + e.getMessage() + " already exists");
