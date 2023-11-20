@@ -7,3 +7,13 @@ INSERT INTO ingredients(name) VALUES('cipolla');
 INSERT INTO ingredients(name) VALUES('gamberetto');
 INSERT INTO ingredients(name) VALUES('ananas');
 
+INSERT INTO roles (id, name) VALUES(1, 'ADMIN');
+INSERT INTO roles (id, name) VALUES(2, 'USER');
+
+
+INSERT INTO users (email, first_name, last_name,  password) VALUES('john@email.com', 'John', 'Doe',  '{noop}john');
+INSERT INTO users (email, first_name, last_name,  password) VALUES('jane@email.com', 'Jane', 'Smith', '{noop}jane');
+
+INSERT INTO users_roles (user_id, roles_id) VALUES(1, 1);
+INSERT INTO users_roles (user_id, roles_id) VALUES(1, 2);
+INSERT INTO users_roles (user_id, roles_id) VALUES(2, 2);
