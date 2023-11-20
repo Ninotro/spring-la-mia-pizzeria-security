@@ -37,7 +37,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/pizzas/**").hasAnyAuthority("ADMIN", "USER")
+                .requestMatchers("/pizzas").hasAnyAuthority("ADMIN", "USER")
                 .requestMatchers("/pizzas/create", "/pizzas/edit", "/pizzas/delete").hasAuthority("ADMIN")
                 .requestMatchers("/offer/**", "/ingredient/**").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
